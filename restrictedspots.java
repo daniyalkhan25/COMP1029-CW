@@ -1,11 +1,78 @@
-public class restrictedspots {
+public class RestrictedSpots {
+
     private int spotID;
     private String spotName;
-    private double spotArea; // total area in m²
-    private double usableArea; // area available for occupancy
-    private int permittedAvgTime; // average wait/service time in minutes
+    private double spotArea;
+    private double usableArea;
+    private int permittedAvgTime;
     private int maxCapacity;
 
-    public static final double Distancing_Area = 1.0; // m^2
+    // 1 m² per person (social distancing grid model)
+    public static final double DISTANCING_AREA = 1.0;
 
+    /**
+     * @param usableRatio fraction of total area available for occupancy (0.0–1.0)
+     */
+    public RestrictedSpots(int spotID, String spotName,
+            double spotArea, double usableRatio,
+            int permittedAvgTime) {
+        this.spotID = spotID;
+        this.spotName = spotName;
+        this.spotArea = spotArea;
+        this.usableArea = spotArea * usableRatio;
+        this.permittedAvgTime = permittedAvgTime;
+        this.maxCapacity = calculateMaxCapacity();
+    }
+
+    // Ensures at least 1 slot is always available
+    private int calculateMaxCapacity() {
+        int cap = (int) Math.floor(usableArea / DISTANCING_AREA);
+        return Math.max(cap, 1);
+    }
+
+    public int getSpotID() {
+        return spotID;
+    }
+
+    public String getSpotName() {
+        return spotName;
+    }
+
+    public double getSpotArea() {
+        return spotArea;
+    }
+
+    public double getUsableArea() {
+        return usableArea;
+    }
+
+    public int getPermittedAvgTime() {
+        return permittedAvgTime;
+    }
+
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    public void setUsableArea(double usableArea) {
+        this.usableArea = usableArea;
+        this.maxCapacity = calculateMaxCapacity();
+    }
+
+    public void displaySpotInfo() {
+        System.out.println("  ┌─────────────────────────────────────────┐");
+        System.out.printf("  │ Spot ID      : %-26d│%n", spotID);
+        System.out.printf("  │ Name         : %-26s│%n", spotName);
+        System.out.printf("  │ Total Area   : %-23.1f m²│%n", spotArea);
+        System.out.printf("  │ Usable Area  : %-23.1f m²│%n", usableArea);
+        System.out.printf("  │ Max Capacity : %-26d│%n", maxCapacity);
+        System.out.printf("  │ Avg Wait Time: %-23d min│%n", permittedAvgTime);
+        System.out.println("  └─────────────────────────────────────────┘");
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[%d] %s (Max: %d people, Avg wait: %d min)",
+                spotID, spotName, maxCapacity, permittedAvgTime);
+    }
 }
