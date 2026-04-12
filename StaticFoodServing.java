@@ -12,14 +12,26 @@ public class StaticFoodServing extends DynamicFoodServing {
     };
 
     private static final Random RNG = new Random();
+    
+    // THIS is your one and only global scanner!
     private static final Scanner INPUT = new Scanner(System.in);
 
     public static void main(String[] args) {
 
         printBanner();
 
-        // Replace with your own Nottingham Student ID and full name
-        Robot robot = new Robot("20XXXXXXX", "Your Full Name");
+        // Replace with own Nottingham Student ID and full name
+        System.out.println("--- Robot Registration ---");
+        
+        // REMOVED: Scanner input = new Scanner(System.in); 
+        // We use the global INPUT scanner instead
+        System.out.print("Robot ID: ");
+        String studentId = INPUT.nextLine().trim();
+        
+        System.out.print("Robot Name: ");
+        String fullName = INPUT.nextLine().trim();
+        
+        Robot robot = new Robot(studentId, fullName);
 
         boolean continueSession = true;
 
@@ -59,6 +71,7 @@ public class StaticFoodServing extends DynamicFoodServing {
             }
         }
 
+        // It is safe to close the global scanner at the very end of main
         INPUT.close();
     }
 
@@ -68,9 +81,12 @@ public class StaticFoodServing extends DynamicFoodServing {
         System.out.println("[System] Proceeding to dynamic distancing check...\n");
 
         StaticFoodServing sfs = new StaticFoodServing();
+        
+        // CHANGED: We now pass the global INPUT scanner into this method
         sfs.checkDynamicDistance(robot,
                 String.valueOf(spot.getSpotID()),
-                spot.getSpotName());
+                spot.getSpotName(),
+                INPUT); 
 
         printDateTime();
     }
@@ -125,11 +141,9 @@ public class StaticFoodServing extends DynamicFoodServing {
         System.out.println("  ╠════════════════════════════════════════════════════════════════╣");
 
         for (RestrictedSpots s : SPOTS) {
-            // Increased from %-48s to %-62s to accommodate the longest string
             System.out.printf("  ║ %-62s ║%n", s.toString());
         }
 
-        // Expanded the spacing here to match as well
         System.out.println("  ║ [0] Exit System                                                ║");
         System.out.println("  ╚════════════════════════════════════════════════════════════════╝");
     }
