@@ -4,14 +4,14 @@ import java.util.Scanner;
 public class StaticFoodServing extends DynamicFoodServing {
 
     private static final RestrictedSpots[] SPOTS = {
-        new RestrictedSpots(1, "Dining Foyer",           50.0, 0.70, 5),
-        new RestrictedSpots(2, "Main Dining Hall",      200.0, 0.75, 15),
-        new RestrictedSpots(3, "Dining Terrace One",     80.0, 0.65, 10),
-        new RestrictedSpots(4, "Dining Terrace Two",     80.0, 0.65, 10),
-        new RestrictedSpots(5, "Family Dining Terrace", 120.0, 0.70, 12)
+            new RestrictedSpots(1, "Dining Foyer", 50.0, 0.70, 5),
+            new RestrictedSpots(2, "Main Dining Hall", 200.0, 0.75, 15),
+            new RestrictedSpots(3, "Dining Terrace One", 80.0, 0.65, 10),
+            new RestrictedSpots(4, "Dining Terrace Two", 80.0, 0.65, 10),
+            new RestrictedSpots(5, "Family Dining Terrace", 120.0, 0.70, 12)
     };
 
-    private static final Random  RNG   = new Random();
+    private static final Random RNG = new Random();
     private static final Scanner INPUT = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -120,15 +120,18 @@ public class StaticFoodServing extends DynamicFoodServing {
     }
 
     private static void displaySpotMenu() {
-        System.out.println();
-        System.out.println("  ╔══════════════════════════════════════════════════╗");
-        System.out.println("  ║       RESTAURANT RESTRICTED SPOTS MENU          ║");
-        System.out.println("  ╠══════════════════════════════════════════════════╣");
+        System.out.println("  ╔════════════════════════════════════════════════════════════════╗");
+        System.out.println("  ║               RESTAURANT RESTRICTED SPOTS MENU                 ║");
+        System.out.println("  ╠════════════════════════════════════════════════════════════════╣");
+
         for (RestrictedSpots s : SPOTS) {
-            System.out.printf("  ║  %-48s║%n", s.toString());
+            // Increased from %-48s to %-62s to accommodate the longest string
+            System.out.printf("  ║ %-62s ║%n", s.toString());
         }
-        System.out.println("  ║  [0] Exit System                                ║");
-        System.out.println("  ╚══════════════════════════════════════════════════╝");
+
+        // Expanded the spacing here to match as well
+        System.out.println("  ║ [0] Exit System                                                ║");
+        System.out.println("  ╚════════════════════════════════════════════════════════════════╝");
     }
 
     /** Loops until the user enters a valid integer within [min, max]. */
@@ -150,8 +153,7 @@ public class StaticFoodServing extends DynamicFoodServing {
 
     private static void printDateTime() {
         java.time.LocalDateTime now = java.time.LocalDateTime.now();
-        java.time.format.DateTimeFormatter fmt =
-                java.time.format.DateTimeFormatter.ofPattern("dd-MMM-yyyy  HH:mm:ss");
+        java.time.format.DateTimeFormatter fmt = java.time.format.DateTimeFormatter.ofPattern("dd-MMM-yyyy  HH:mm:ss");
         System.out.println("Date & Time  : " + now.format(fmt));
     }
 

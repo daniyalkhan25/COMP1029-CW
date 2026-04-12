@@ -60,14 +60,18 @@ public class RestrictedSpots {
     }
 
     public void displaySpotInfo() {
-        System.out.println("  ┌─────────────────────────────────────────┐");
-        System.out.printf("  │ Spot ID      : %-26d│%n", spotID);
-        System.out.printf("  │ Name         : %-26s│%n", spotName);
-        System.out.printf("  │ Total Area   : %-23.1f m²│%n", spotArea);
-        System.out.printf("  │ Usable Area  : %-23.1f m²│%n", usableArea);
-        System.out.printf("  │ Max Capacity : %-26d│%n", maxCapacity);
-        System.out.printf("  │ Avg Wait Time: %-23d min│%n", permittedAvgTime);
-        System.out.println("  └─────────────────────────────────────────┘");
+        System.out.println("  ┌──────────────────────────────────────────┐");
+        System.out.printf("  │ Spot ID      : %-25d │%n", spotID);
+        System.out.printf("  │ Name         : %-25s │%n", spotName);
+
+        // Group the number and unit together first, then pad the whole string to 25
+        // spaces
+        System.out.printf("  │ Total Area   : %-25s │%n", String.format("%.1f m²", spotArea));
+        System.out.printf("  │ Usable Area  : %-25s │%n", String.format("%.1f m²", usableArea));
+
+        System.out.printf("  │ Max Capacity : %-25d │%n", maxCapacity);
+        System.out.printf("  │ Avg Wait Time: %-25s │%n", permittedAvgTime + " min");
+        System.out.println("  └──────────────────────────────────────────┘");
     }
 
     @Override
